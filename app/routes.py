@@ -25,7 +25,7 @@ def register():
         new_user = User(username=form.username.data)
         new_user.set_password(form.password.data)
         # Automatically make user 'greg' an admin
-        if form.username.data.lower() == 'greg':
+        if form.username.data == 'greg':
             new_user.is_admin = True
 
         db.session.add(new_user)
