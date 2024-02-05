@@ -1,6 +1,4 @@
-venv
+venv*
 __pycache__
 pyvenv.cfg
 .env
-*.db
-*.dat

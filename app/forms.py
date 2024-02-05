@@ -1,19 +1,20 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField
-from wtforms.validators import DataRequired
-import json
+from wtforms.validators import DataRequired, Length, Email
+import pytz
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
+    time_zone = SelectField('Time Zone', choices=[(tz, tz) for tz in pytz.all_timezones], default='US/Eastern')
     submit = SubmitField('Register')
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class AdminPasswordResetForm(FlaskForm):
-    username = SelectField('Select User', choices=[])  # Choices will be populated in the route
-    new_password = PasswordField('New Password', validators=[DataRequired()])
+    email = SelectField('Select User', choices=[])
+    new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=4)])
     submit = SubmitField('Reset Password')
